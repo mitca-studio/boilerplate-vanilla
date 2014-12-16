@@ -4,6 +4,7 @@
   "author": "mitca studio",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^2.0.0",
     "grunt-contrib-handlebars": "^0.9.1",
     "grunt-contrib-sass": "^0.8.1",
     "grunt-contrib-watch": "^0.6.1"

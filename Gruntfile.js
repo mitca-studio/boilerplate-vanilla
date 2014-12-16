@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-	// Configuración del proyecto.
+	// Project configuration
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
@@ -10,8 +10,26 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'app/css/style.min.css': 'app/scss/main.scss' // Destino: Origen
+					'app/css/style.min.css': 'app/scss/main.scss' // Dest: Src
 				}
+			}
+		},
+
+		autoprefixer: {
+			options: { // Task-specific options
+				browsers: ['last 2 versions', 'ie 9']
+			},
+			target: { // Target-specific file lists and/or options
+				src: 'app/css/style.min.css'
+			},
+			sourcemap: {
+				options: {
+					map: {
+						inline: false,
+						prev: 'app/css/' // Previous Sass sourcemap
+					}
+				},
+				src: 'app/css/style.min.css'
 			}
 		},
 
@@ -21,32 +39,33 @@ module.exports = function(grunt) {
 					namespace: 'JST'
 				},
 				files: {
-					'app/js/compiled-templates.js': 'app/templates/**/*.hbs' // Destino: Origen
+					'app/js/compiled-templates.js': 'app/templates/**/*.hbs' // Dest: Src
 				}
 			}
 		},
 
 		watch: {
 			livereload: {
-				files: ['app/**/*'], // Ficheros que se van a vigilar.
-				options: { livereload: true } // Habilitamos livereload en el puerto por defecto (35729) para cuando cambien los ficheros bajo vigilancia.
+				files: ['app/**/*'],
+				options: { livereload: true } // Enable live reload on port 35729
 			},
 			css: {
-				files: ['**/*.scss'], // Ficheros que se van a vigilar.
-				tasks: ['sass'] // Tarea(s) a ejecutar cuando cambien los ficheros bajo vigilancia.
+				files: ['**/*.scss'],
+				tasks: ['sass', 'autoprefixer']
 			},
 			templates: {
-				files: ['**/*.hbs'], // Ficheros que se van a vigilar.
-				tasks: ['handlebars'] // Tarea(s) a ejecutar cuando cambien los ficheros bajo vigilancia.
+				files: ['**/*.hbs'],
+				tasks: ['handlebars']
 			}
 		}
 	});
 
-	// Carga de plugins que proveen de las tareas.
+	// Load the plugins that provides the tasks
 	grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	// Tarea(s) por defecto.
-	grunt.registerTask('default', ['sass', 'handlebars', 'watch']);
+	// Default task(s).
+	grunt.registerTask('default', ['sass', 'autoprefixer', 'handlebars', 'watch']);
 };
