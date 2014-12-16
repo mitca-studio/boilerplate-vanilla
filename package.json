@@ -1,7 +1,11 @@
 {
-  "name": "base",
+  "name": "boilerplate-vanilla",
   "version": "0.1.0",
   "author": "mitca studio",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mitca/boilerplate-vanilla.git"
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^2.0.0",
