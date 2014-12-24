@@ -17,18 +17,10 @@ module.exports = function(grunt) {
 
 		autoprefixer: {
 			options: { // Task-specific options
-				browsers: ['last 2 versions', 'ie 9']
+				browsers: ['last 2 versions', 'ie 9'],
+				map: true // Create a new sourcemap based on the found one (or just create a new inlined sourcemap)
 			},
 			target: { // Target-specific file lists and/or options
-				src: 'app/css/style.min.css'
-			},
-			sourcemap: {
-				options: {
-					map: {
-						inline: false,
-						prev: 'app/css/' // Previous Sass sourcemap
-					}
-				},
 				src: 'app/css/style.min.css'
 			}
 		},
