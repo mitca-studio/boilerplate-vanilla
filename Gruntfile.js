@@ -49,6 +49,33 @@ module.exports = function(grunt) {
 				files: ['**/*.hbs'],
 				tasks: ['handlebars']
 			}
+		},
+
+		copy: {
+			dist: {
+				expand: true,
+				cwd: 'app/',
+				src: ['css/style.min.css', 'fonts/**', 'js/**', 'index.html'],
+				dest: 'dist/',
+				options: {
+					process: function (content, srcpath) {
+						// Remove livereload
+						return content.replace(/<script src="http:\/\/localhost:35729\/livereload.js"><\/script>/g, '');
+					}
+				}
+			}
+		},
+
+		htmlmin: {
+			dist: {
+				options: {
+					removeComments: true,
+					collapseWhitespace: true
+				},
+				files: {
+					'dist/index.html': 'dist/index.html' // Dest: Src
+				}
+			}
 		}
 	});
 
@@ -57,7 +84,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass', 'autoprefixer', 'handlebars', 'watch']);
+	grunt.registerTask('dist', ['copy', 'htmlmin']);
 };
